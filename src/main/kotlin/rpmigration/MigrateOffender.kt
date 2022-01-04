@@ -1,6 +1,6 @@
 package rpmigration
 
-import gateways.PrisonApi
+import gateways.NomisUserRoleApi
 import gateways.PrisonerNotAddedToRpDbException
 import gateways.PrisonerNotRemovedFromRpDbException
 import gateways.RestrictedPatientsApi
@@ -23,7 +23,7 @@ data class MigrateOffenderRequestEvent(
 class MigrateOffender (
     private val successfulMigrations: SuccessfulOffenderMigrations,
     private val progressStream: PerOffenderFileOutput,
-    private val prisonApi: PrisonApi,
+    private val prisonApi: NomisUserRoleApi,
     private val restrictedPatientApi: RestrictedPatientsApi,
     private val removingExistingRestrictedPatient: Boolean,
     private val recallMovementReasonCode: String,
@@ -36,8 +36,8 @@ class MigrateOffender (
         println("Attempting to migrate ${command.offenderNo} ")
 
         val recallTime = LocalDateTime.now()
-        prisonApi.recall(command.responsiblePrisonId, command.offenderNo, recallTime,
-            recallMovementReasonCode, recallImprisonmentStatus, recallIsYouthOffender)
+//        prisonApi.recall(command.responsiblePrisonId, command.offenderNo, recallTime,
+//            recallMovementReasonCode, recallImprisonmentStatus, recallIsYouthOffender)
         progressStream.recallSuccessful(command.progressStreamRef)
 
         if (removingExistingRestrictedPatient) {

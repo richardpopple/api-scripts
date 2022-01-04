@@ -1,4 +1,4 @@
-import gateways.PrisonApi
+import gateways.NomisUserRoleApi
 import gateways.RestrictedPatientsApi
 import fileaccess.PerOffenderFileOutput
 import fileaccess.SuccessfulOffenderMigrations
@@ -9,28 +9,33 @@ import rpmigration.Migrations
 import spreadsheetaccess.SpreadsheetReader
 
 fun main() {
-    val config: Config = Dev()
+    
+    val usernamesWithRole302InMdi = nomisUserRoleApi.withRoleAndCaseload("302", "MDI")
+    println(usernamesWithRole302InMdi.size)
 
-    val archiveSubDirectory = "archive"
-    val existingSuccessfulMigrationFileName = "SUCCESSFUL_MIGRATIONS.txt"
-    val recallMovementReasonCode = "Z"
-    val recallImprisonmentStatus = "RECEP_HOS"
-    val recallIsYouthOffender = false
-    val dischargeToHospitalCommentText = "Released to hospital (Restricted Patients migration)"
 
-    val successfulOffenderMigrations = SuccessfulOffenderMigrations(config.resultsBaseDirectory, existingSuccessfulMigrationFileName)
-    val progressStream = PerOffenderFileOutput(config.resultsBaseDirectory, archiveSubDirectory)
-    val prisonApi = PrisonApi(config.prisonApiRootUrl, config.token)
-    val rpApi = RestrictedPatientsApi(config.restrictedPatientsApiRootUrl, config.token)
+//    val config: Config = Dev()
 
-    val migrationCommand = Migrations(
-        SpreadsheetReader(config.spreadsheetFileName),
-        successfulOffenderMigrations,
-        SynchronisedSummaryOutput(config.resultsBaseDirectory),
-        PerOffenderFileOutput(config.resultsBaseDirectory, archiveSubDirectory),
-        MigrateOffender(successfulOffenderMigrations, progressStream, prisonApi, rpApi, config.removingExistingRestrictedPatient,
-            recallMovementReasonCode, recallImprisonmentStatus, recallIsYouthOffender, dischargeToHospitalCommentText)
-    )
-
-    migrationCommand.handle(MigrationRequestEvent(11, 4))
+//    val archiveSubDirectory = "archive"
+//    val existingSuccessfulMigrationFileName = "SUCCESSFUL_MIGRATIONS.txt"
+//    val recallMovementReasonCode = "Z"
+//    val recallImprisonmentStatus = "RECEP_HOS"
+//    val recallIsYouthOffender = false
+//    val dischargeToHospitalCommentText = "Released to hospital (Restricted Patients migration)"
+//
+//    val successfulOffenderMigrations = SuccessfulOffenderMigrations(config.resultsBaseDirectory, existingSuccessfulMigrationFileName)
+//    val progressStream = PerOffenderFileOutput(config.resultsBaseDirectory, archiveSubDirectory)
+//    val prisonApi = NomisUserRoleApi(config.prisonApiRootUrl, config.token)
+//    val rpApi = RestrictedPatientsApi(config.restrictedPatientsApiRootUrl, config.token)
+//
+//    val migrationCommand = Migrations(
+//        SpreadsheetReader(config.spreadsheetFileName),
+//        successfulOffenderMigrations,
+//        SynchronisedSummaryOutput(config.resultsBaseDirectory),
+//        PerOffenderFileOutput(config.resultsBaseDirectory, archiveSubDirectory),
+//        MigrateOffender(successfulOffenderMigrations, progressStream, prisonApi, rpApi, config.removingExistingRestrictedPatient,
+//            recallMovementReasonCode, recallImprisonmentStatus, recallIsYouthOffender, dischargeToHospitalCommentText)
+//    )
+//
+//    migrationCommand.handle(MigrationRequestEvent(11, 4))
 }
