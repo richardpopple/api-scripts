@@ -4,7 +4,7 @@ import gateways.PrisonApi
 fun main() {
 
     val config = Dev()
-    val token = "TODO"
+    val token = "TO FILL IN"
     val prisonApi = PrisonApi(config.prisonApi, token)
     val nomisUserRoleApi = NomisUserRoleApi(config.nomisUserRoleApi, token)
     val nomisRole = "302"
