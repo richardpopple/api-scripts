@@ -5,6 +5,8 @@ This project provides Kotlin code to coordinate API calls.
 
 As such, it is very useful for one-off tasks like migrations.
 
+TO RUN YOU MUST BE ON THE VPN
+
 # Features
 There is currently only 1 function, invoked from the Main class.
 
