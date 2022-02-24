@@ -23,7 +23,6 @@ fun main() {
     val csvReader = CSVReaderBuilder(FileReader(usernamesFileName)).build()
     var line: Array<String>? = csvReader.readNext()
     while (line != null) {
-        // Do something with the data
         usernames.add(line[0])
         line = csvReader.readNext()
     }
