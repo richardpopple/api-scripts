@@ -17,6 +17,7 @@ dependencies {
     implementation("org.junit.jupiter:junit-jupiter:5.4.2")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.5.2")
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.3.2")
+    implementation("com.opencsv:opencsv:5.6")
     testImplementation(kotlin("test"))
     testImplementation("net.javacrumbs.json-unit:json-unit-assertj:2.28.0")
 }

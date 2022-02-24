@@ -28,13 +28,16 @@ class NomisUserRoleApi (
             val combinedResult = lines.joinToString (" ")
             return Json {ignoreUnknownKeys = true} .decodeFromString(combinedResult)
         } catch (e: Exception) {
-            e.printStackTrace()
+//            e.printStackTrace()
             val errorString = getError(conn)
             println("Error response: ${conn.responseCode}: ${conn.responseMessage}")
             if (conn.responseCode >= 500) {
                 throw ServerException()
             } else if (conn.responseCode == 409) {
                 println("Username: $username already has the dps role: $role")
+                return User(username)
+            } else if (conn.responseCode == 404) {
+                println("Username: $username not found: $role")
                 return User(username)
             }
             throw WebClientException(conn.responseCode, errorString)
